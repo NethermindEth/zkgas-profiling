@@ -1,6 +1,8 @@
 name: UB (undefined behavior) detection
 
-on: push
+on: 
+  push:
+  pull_request:
 
 env:
   CARGO_TERM_COLOR: always
@@ -10,7 +12,7 @@ env:
 
 jobs:
   ub-detection:
-    if: github.event.pull_request.draft == false
+    if: github.event_name != 'pull_request' || !github.event.pull_request.draft
     name: Check for undefined behaviour (UB)
     timeout-minutes: 30
     runs-on: ubuntu-latest
